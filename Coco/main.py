@@ -2,62 +2,91 @@ from Coco.GetCocoData import *
 from Coco.OverviewData import *
 from collections import Counter
 
+def writeLog(log:str):
+    if os.path.isfile('log.txt'):
+        file = open('log.txt', 'a')
+        file.write(log+'\n')
+        file.close()
+    else:
+        file = open('log.txt', 'w')
+        file.write(log + '\n')
+        file.close()
 
 def cropImage():
 
     pathAnnotationFile = '/home/dungpb/Downloads/Data tranning/annotations_trainval2014/annotations/instances_train2014.json'
-    category = 'car'
+    category = ['person', 'bicycle', 'car', 'motorcycle', 'bus', 'train', 'truck', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'cat', 'dog']
     pathDirImage = '/home/dungpb/Downloads/Data tranning/train2014/'
-    pathDesDir = '/home/dungpb/Downloads/Data tranning/car/'
+    pathDesDir = '/home/dungpb/Downloads/Data tranning/img_crop/'
 
-    img_error = []
+    img = cv2.imread('/home/dungpb/Dev/classificationObject/test.jpg')
 
-    coco = GetCocoData(pathAnnotationFile, category, pathDirImage)
-
-    imgIds = coco.getDetailImage()
-
-    numImg = len(imgIds)
-
-    for i in range(1772,numImg):
-
-        img, imgDet = coco.getImage(i)
-
-        anns = coco.getAnnIds(imgDet)
-
-        imgFileName = pathDesDir + imgDet['file_name'].split('.')[0]
-
-        print('cropped ', i, ' image of ', numImg, 'images')
-
-        for j in range(len(anns)):
-
+    for cat in category:
+        path = pathDesDir+cat
+        if os.path.isdir(path):
+            writeLog("File %s exists" % path)
+        else:
             try:
-                imgFileName = imgFileName + '_' + str(j) + '.png'
+                os.mkdir(path)
+            except OSError:
+                writeLog("Creation of the directory %s failed" % path)
+            else:
+                writeLog("Successfully created the directory %s " % path)
 
-                mask = coco.getMask(anns, j)
+        img_error = []
 
-                crop_img = coco.cropImageWithMask(img, mask)
+        coco = GetCocoData(pathAnnotationFile, cat, pathDirImage)
 
-                cv2.imwrite(imgFileName, crop_img)
+        imgIds = coco.getDetailImage()
 
-            except:
-                img_error.append(i)
-            finally:
-                j += 1
+        numImg = len(imgIds)
 
-    print('id image error: ', img_error)
+        print('______',cat,'______')
+
+        writeLog('______'+cat+'______')
+
+        for i in range(numImg):
+
+            img, imgDet = coco.getImage(i)
+
+            anns = coco.getAnnIds(imgDet)
+
+            print(cat, ' :cropped ', i, ' image of ', numImg, 'images')
+            writeLog(cat + ' :cropped '+ str(i) + ' image of '+ str(numImg) + 'images')
+
+            for j in range(len(anns)):
+
+                imgFileName = pathDesDir + imgDet['file_name'].split('.')[0]
+
+                try:
+                    imgFileName = imgFileName + '_' + str(j) + '.png'
+
+                    mask = coco.getMask(anns, j)
+
+                    crop_img = coco.cropImageWithMask(img, mask)
+
+                    cv2.imwrite(imgFileName, crop_img)
+
+                except:
+                    img_error.append(i)
+                finally:
+                    j += 1
+
+        print(cat, ': id image error: ', img_error)
+        writeLog(cat + ': id image error: '+ str(img_error))
 
 
 def overviewData():
 
-    pathDirImage = ( '/home/dungpb/Downloads/Data tranning/car/')
+    pathDirImage = ('/home/dungpb/Downloads/Data tranning/car/')
 
     overviewData = OverviewData(pathDirImage)
 
-    overviewData.vTData(10)
+    overviewData.vTData(20)
 
 def testCropImage():
 
-    img_error = []
+    # id image error:  [1773, 3761]
 
     pathAnnotationFile = '/home/dungpb/Downloads/Data tranning/annotations_trainval2014/annotations/instances_train2014.json'
     category = 'car'
@@ -67,7 +96,7 @@ def testCropImage():
 
     imgIds = coco.getDetailImage()
 
-    img, imgDet = coco.getImage(1773)
+    img, imgDet = coco.getImage(3761)
     cv2.imshow('img', img)
 
     anns = coco.getAnnIds(imgDet)
@@ -75,13 +104,7 @@ def testCropImage():
     mask = coco.getMask(anns, 0)
     cv2.imshow('mask', mask)
 
-
-    try:
-        crop_img = coco.cropImageWithMask(img, mask)
-    except:
-        img_error.append(1773)
-    finally:
-        j += 1
+    crop_img = coco.cropImageWithMask(img, mask)
 
     cv2.imshow('show', crop_img)
     cv2.imshow('mask', mask)

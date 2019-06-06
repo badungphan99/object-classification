@@ -21,7 +21,8 @@ class OverviewData:
 
         # read images in dir
         for i in self.__files:
-            img = cv2.imread(i)
+
+            img = cv2.imread(self.__pathDirImage + i)
 
             rows = len(img)
 
@@ -61,7 +62,6 @@ class OverviewData:
 
         for i in range(1, len(new_x)):
             temp_y = 0
-            print(new_x[i])
             for j in range(len(y)):
                 if x[j] > new_x[i - 1] and x[j] <= new_x[i]:
                     temp_y += y[j]
@@ -72,6 +72,10 @@ class OverviewData:
         print('number vertical imgs: ', self.__vertical_imgs)
 
         new_x.remove(new_x[0])
+
+        print(new_x)
+        print(new_y)
+
         tuple(new_x)
 
         plt.bar(new_x, new_y, align='center')  # A bar chart
