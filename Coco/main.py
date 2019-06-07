@@ -15,13 +15,14 @@ def writeLog(log:str):
 def cropImage():
 
     pathAnnotationFile = '/home/dungpb/Downloads/Data tranning/annotations_trainval2014/annotations/instances_train2014.json'
-    category = ['person', 'bicycle', 'car', 'motorcycle', 'bus', 'train', 'truck', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'cat', 'dog']
+    category = ['bicycle', 'car', 'motorcycle', 'bus', 'train', 'truck', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'cat', 'dog', 'person']
     pathDirImage = '/home/dungpb/Downloads/Data tranning/train2014/'
     pathDesDir = '/home/dungpb/Downloads/Data tranning/img_crop/'
 
     for cat in category:
+        count = 0
         pathDesDirCat = pathDesDir + cat + '/'
-        if os.path.isdir(pathDesDir):
+        if os.path.isdir(pathDesDirCat):
             writeLog("File %s exists" % pathDesDirCat)
         else:
             try:
@@ -65,12 +66,15 @@ def cropImage():
 
                     cv2.imwrite(imgFileName, crop_img)
 
+                    count += 1
+
                 except:
                     img_error.append(i)
                 finally:
                     j += 1
 
         print(cat, ': id image error: ', img_error)
+        writeLog('number image write success: ' + str(count))
         writeLog(cat + ': id image error: '+ str(img_error))
 
 
