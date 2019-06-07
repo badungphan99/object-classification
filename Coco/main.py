@@ -19,19 +19,17 @@ def cropImage():
     pathDirImage = '/home/dungpb/Downloads/Data tranning/train2014/'
     pathDesDir = '/home/dungpb/Downloads/Data tranning/img_crop/'
 
-    img = cv2.imread('/home/dungpb/Dev/classificationObject/test.jpg')
-
     for cat in category:
-        path = pathDesDir+cat
-        if os.path.isdir(path):
-            writeLog("File %s exists" % path)
+        pathDesDir = pathDesDir + cat + '/'
+        if os.path.isdir(pathDesDir):
+            writeLog("File %s exists" % pathDesDir)
         else:
             try:
-                os.mkdir(path)
+                os.mkdir(pathDesDir)
             except OSError:
-                writeLog("Creation of the directory %s failed" % path)
+                writeLog("Creation of the directory %s failed" % pathDesDir)
             else:
-                writeLog("Successfully created the directory %s " % path)
+                writeLog("Successfully created the directory %s " % pathDesDir)
 
         img_error = []
 
@@ -41,7 +39,7 @@ def cropImage():
 
         numImg = len(imgIds)
 
-        print('______',cat,'______')
+        print('______', cat, '______')
 
         writeLog('______'+cat+'______')
 
@@ -52,7 +50,7 @@ def cropImage():
             anns = coco.getAnnIds(imgDet)
 
             print(cat, ' :cropped ', i, ' image of ', numImg, 'images')
-            writeLog(cat + ' :cropped '+ str(i) + ' image of '+ str(numImg) + 'images')
+            writeLog(cat + ' :cropped '+ str(i) + ' image of '+ str(numImg) + ' images')
 
             for j in range(len(anns)):
 
