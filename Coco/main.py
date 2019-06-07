@@ -20,16 +20,16 @@ def cropImage():
     pathDesDir = '/home/dungpb/Downloads/Data tranning/img_crop/'
 
     for cat in category:
-        pathDesDir = pathDesDir + cat + '/'
+        pathDesDirCat = pathDesDir + cat + '/'
         if os.path.isdir(pathDesDir):
-            writeLog("File %s exists" % pathDesDir)
+            writeLog("File %s exists" % pathDesDirCat)
         else:
             try:
-                os.mkdir(pathDesDir)
+                os.mkdir(pathDesDirCat)
             except OSError:
-                writeLog("Creation of the directory %s failed" % pathDesDir)
+                writeLog("Creation of the directory %s failed" % pathDesDirCat)
             else:
-                writeLog("Successfully created the directory %s " % pathDesDir)
+                writeLog("Successfully created the directory %s " % pathDesDirCat)
 
         img_error = []
 
@@ -54,7 +54,7 @@ def cropImage():
 
             for j in range(len(anns)):
 
-                imgFileName = pathDesDir + imgDet['file_name'].split('.')[0]
+                imgFileName = pathDesDirCat + imgDet['file_name'].split('.')[0]
 
                 try:
                     imgFileName = imgFileName + '_' + str(j) + '.png'
@@ -83,8 +83,6 @@ def overviewData():
     overviewData.vTData(20)
 
 def testCropImage():
-
-    # id image error:  [1773, 3761]
 
     pathAnnotationFile = '/home/dungpb/Downloads/Data tranning/annotations_trainval2014/annotations/instances_train2014.json'
     category = 'car'
