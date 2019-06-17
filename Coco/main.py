@@ -80,11 +80,11 @@ def cropImage():
 
 def overviewData():
 
-    pathDirImage = ('/home/dungpb/Downloads/Data tranning/car/')
+    pathDirImage = ('/home/dungpb/Downloads/Data tranning/img_crop/car/')
 
     overviewData = OverviewData(pathDirImage)
 
-    overviewData.vTData(20)
+    overviewData.vTData(1000)
 
 def testCropImage():
 
@@ -123,4 +123,4 @@ def test():
 
 if __name__ == "__main__":
 
-    cropImage()
+    overviewData()
