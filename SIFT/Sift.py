@@ -69,3 +69,15 @@ class Sift:
 
     def getDataSift(self, numKeypoint: int):
         pass
+
+    def siftImage(self):
+        for i in range(len(self.__files)):
+            path = self.__pathDir + self.__files[i]
+            img = cv2.imread(path)
+            imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            sift = cv2.xfeatures2d.SIFT_create()
+            kp, descriptors = sift.detectAndCompute(imgGray, None)
+            img = cv2.drawKeypoints(img, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            cv2.imshow(self.__files[i], img)
+            print(descriptors[2])
+            cv2.waitKey(0)

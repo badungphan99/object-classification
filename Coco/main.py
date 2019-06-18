@@ -77,50 +77,17 @@ def cropImage():
         writeLog('number image write success: ' + str(count))
         writeLog(cat + ': id image error: '+ str(img_error))
 
-
 def overviewData():
 
-    pathDirImage = ('/home/dungpb/Downloads/Data tranning/img_crop/car/')
+    pathDirImage = '/home/dungpb/Downloads/Data tranning/img_crop/car/'
 
     overviewData = OverviewData(pathDirImage)
 
     overviewData.vTData(1000)
 
-def testCropImage():
+def cropImg():
 
-    pathAnnotationFile = '/home/dungpb/Downloads/Data tranning/annotations_trainval2014/annotations/instances_train2014.json'
-    category = 'car'
-    pathDirImage = '/home/dungpb/Downloads/Data tranning/train2014/'
-
-    coco = GetCocoData(pathAnnotationFile, category, pathDirImage)
-
-    imgIds = coco.getDetailImage()
-
-    img, imgDet = coco.getImage(3761)
-    cv2.imshow('img', img)
-
-    anns = coco.getAnnIds(imgDet)
-
-    mask = coco.getMask(anns, 0)
-    cv2.imshow('mask', mask)
-
-    crop_img = coco.cropImageWithMask(img, mask)
-
-    cv2.imshow('show', crop_img)
-    cv2.imshow('mask', mask)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
-def test():
-    a = [25, 1, 1, 0, 0, 2, 3, 7, 7, 23]
-
-
-
-    counter = Counter(a)
-
-    print(counter)
+    pathDirImage = "../ColorImage"
 
 if __name__ == "__main__":
-
-    overviewData()
+    cropImg()
