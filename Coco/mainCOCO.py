@@ -1,5 +1,6 @@
 from Coco.GetCocoData import *
 from Coco.OverviewData import *
+from Coco.SelectData import *
 from collections import Counter
 
 def writeLog(log:str):
@@ -85,9 +86,14 @@ def overviewData():
 
     overviewData.vTData(1000)
 
-def cropImg():
-
-    pathDirImage = "../ColorImage"
-
+def mouseCropImg():
+    pathDirImage = "../ColorImage/"
+    desDir = "/home/dungpb/Dropbox/Dev/classificationObject/ColorImage/crop/"
+    crop = SelectData(pathDirImage)
+    crop.mouseCropImg(desDir)
+def sizeCropImg():
+    crop = SelectData("../ColorImage/")
+    crop.sizeCropImg(101)
+    pass
 if __name__ == "__main__":
-    cropImg()
+    mouseCropImg()

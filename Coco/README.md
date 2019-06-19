@@ -12,7 +12,5 @@ I will show you the way how to create your own COCO-style datasets.
     `pip 3 install cython numpy pycocotools matplotlib opencv-python`
 2. Download [COCO](http://cocodataset.org/#download) datasets on your computer (Images and Annotations)
 3. Pull the repository `git clone https://github.com/badungphan99/object-classification`
-4. Change some **paths** in my code to yours on computer in [main.py](https://github.com/badungphan99/object-classification/blob/master/Coco/main.py)
+4. Change some **paths** in my code to yours on computer in [mainCOCO.py](https://github.com/badungphan99/object-classification/blob/master/Coco/mainCOCO.py)
 5. Run and wait, it may take a long time.
-
-
