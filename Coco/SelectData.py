@@ -10,7 +10,7 @@ class SelectData:
 		self.cropping = False
 
 
-	def mouseCropImg(self, desDir):
+	def mouseCropImg(self, desDir:str):
 		files = [f for f in os.listdir(self.pathDir) if os.path.isfile(os.path.join(self.pathDir, f))]
 		if not os.path.exists(desDir):
 			os.mkdir(desDir)
@@ -64,7 +64,42 @@ class SelectData:
 		# close all open windows
 		cv2.destroyAllWindows()
 
-	def sizeCropImg(self, size):
-		length = int(math.sqrt(size))
-		print(length)
-		pass
+	def sizeCropImg(self, minSize:int, maxSize:int, desDirResize:str, desDirSkip:str):
+
+		files = [f for f in os.listdir(self.pathDir) if os.path.isfile(os.path.join(self.pathDir, f))]
+		if not os.path.exists(desDirResize):
+			os.mkdir(desDirResize)
+		else:
+			print("Dir already exists")
+
+		for i in range(len(files)):
+
+			nomSize = int(minSize + (maxSize - minSize) * 2 / 3)
+
+			d = math.sqrt(nomSize)
+
+			pathImg = self.pathDir + files[i]
+
+			pathRezie = desDirResize + files[i]
+
+			img = cv2.imread(pathImg)
+
+			heigth = len(img)
+			width = len(img[0])
+			area = heigth * width
+			if area < minSize:
+				cv2.imwrite(desDirSkip + str(datetime.datetime.now()) + ".png", img)
+				continue
+			elif area < maxSize:
+				cv2.imwrite(desDirResize + str(datetime.datetime.now()) + ".png", img)
+				continue
+			elif area > maxSize:
+				if(width > heigth):
+					w = width/d
+				else:
+					w = heigth/d
+
+				newX, newY = img.shape[1]/w, img.shape[0]/w
+				imgResize = cv2.resize(img, (int(newX), int(newY)))
+
+				cv2.imwrite(pathRezie, imgResize)

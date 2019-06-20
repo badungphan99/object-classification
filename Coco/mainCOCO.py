@@ -93,7 +93,9 @@ def mouseCropImg():
     crop.mouseCropImg(desDir)
 def sizeCropImg():
     crop = SelectData("../ColorImage/")
-    crop.sizeCropImg(101)
-    pass
+    desDirResize = "/home/dungpb/Dropbox/Dev/classificationObject/ColorImage/test/"
+    desDirSkip = "/home/dungpb/Dropbox/Dev/classificationObject/ColorImage/skip/"
+    crop.sizeCropImg(101, 120, desDirResize, desDirSkip)
+
 if __name__ == "__main__":
-    mouseCropImg()
+    sizeCropImg()
