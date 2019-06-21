@@ -68,6 +68,7 @@ class Sift:
         plt.show()
 
     def getDataSift(self, numKeypoint: int):
+
         pass
 
     def siftImage(self):
@@ -79,5 +80,42 @@ class Sift:
             kp, descriptors = sift.detectAndCompute(imgGray, None)
             img = cv2.drawKeypoints(img, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
             cv2.imshow(self.__files[i], img)
-            print(descriptors[2])
+            print(descriptors)
             cv2.waitKey(0)
+
+    def randomSiftImage(self, numImg:int, pathDir:str):
+        for i in range(numImg):
+            name = random.choice(self.__files)
+            path = self.__pathDir + name
+            pathtxt = pathDir + name + ".txt"
+            img = cv2.imread(path)
+            imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            sift = cv2.xfeatures2d.SIFT_create()
+            kp, descriptors = sift.detectAndCompute(imgGray, None)
+            img = cv2.drawKeypoints(img, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            cv2.imshow(self.__files[i], img)
+            for i in range(len(descriptors)):
+                for j in range(len(descriptors[0])):
+                    print(descriptors[i, j])
+                    file = open(pathtxt, "a")
+                    file.write(str(descriptors[i, j]) + '|')
+                file = open(pathtxt, "a")
+                file.write('\n')
+            cv2.waitKey(0)
+
+    def descriptorSift(self):
+        path = '/home/dungpb/DataTraining/data_train2014/dog/selected/2019-06-21 11:34:27.314954.png'
+        img = cv2.imread(path)
+        imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        sift = cv2.xfeatures2d.SIFT_create()
+        kp, descriptors = sift.detectAndCompute(imgGray, None)
+        img = cv2.drawKeypoints(img, kp, img, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        cv2.imshow("test", img)
+        for i in range(len(descriptors)):
+            for j in range(len(descriptors[0])):
+                print(descriptors[i,j])
+                file = open("demofile2.txt", "a")
+                file.write(str(descriptors[i,j]) + '|')
+            file = open("demofile2.txt", "a")
+            file.write('\n')
+        cv2.waitKey(0)

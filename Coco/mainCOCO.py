@@ -1,5 +1,5 @@
 from Coco.GetCocoData import *
-from Coco.OverviewData import *
+from Coco.StatisticalData import *
 from Coco.SelectData import *
 from collections import Counter
 
@@ -15,10 +15,10 @@ def writeLog(log:str):
 
 def cropImage():
 
-    pathAnnotationFile = '/home/dungpb/Downloads/Data tranning/annotations_trainval2014/annotations/instances_train2014.json'
+    pathAnnotationFile = '/home/dungpb/DataTranning/annotations_trainval2014/annotations/instances_train2014.json'
     category = ['bicycle', 'car', 'motorcycle', 'bus', 'train', 'truck', 'traffic light', 'fire hydrant', 'stop sign', 'parking meter', 'cat', 'dog', 'person']
-    pathDirImage = '/home/dungpb/Downloads/Data tranning/train2014/'
-    pathDesDir = '/home/dungpb/Downloads/Data tranning/img_crop/'
+    pathDirImage = '/home/dungpb/DataTraining/train2014/'
+    pathDesDir = '/home/dungpb/DataTraining/crop_train2014/'
 
     for cat in category:
         count = 0
@@ -82,7 +82,7 @@ def overviewData():
 
     pathDirImage = '/home/dungpb/Downloads/Data tranning/img_crop/car/'
 
-    overviewData = OverviewData(pathDirImage)
+    overviewData = StatisticalData(pathDirImage)
 
     overviewData.vTData(1000)
 
@@ -92,10 +92,24 @@ def mouseCropImg():
     crop = SelectData(pathDirImage)
     crop.mouseCropImg(desDir)
 def sizeCropImg():
-    crop = SelectData("../ColorImage/")
-    desDirResize = "/home/dungpb/Dropbox/Dev/classificationObject/ColorImage/test/"
-    desDirSkip = "/home/dungpb/Dropbox/Dev/classificationObject/ColorImage/skip/"
-    crop.sizeCropImg(101, 120, desDirResize, desDirSkip)
+    category = ['car/', 'motorcycle/', 'train/', 'truck/', 'traffic light/', 'fire hydrant/', 'stop sign/',
+                'parking meter/', 'cat/', 'dog/', 'person/']
+
+    srcDir = "/home/dungpb/DataTraining/crop_train2014/"
+    desDir = "/home/dungpb/DataTraining/data_train2014/"
+
+    for i in category:
+        os.mkdir(desDir + i)
+        desDirResize = desDir + i + "selected/"
+        os.mkdir(desDirResize)
+        desDirSkip = desDir + i + "skip/"
+        os.mkdir(desDirSkip)
+        crop = SelectData("/home/dungpb/DataTraining/crop_train2014/" + i)
+        crop.sizeCropImg(3000, 100000, desDirResize, desDirSkip)
+
+def showSize():
+    statiscal = StatisticalData('/home/dungpb/Dropbox/Dev/classificationObject/ColorImage/crop/')
+    statiscal.getSize()
 
 if __name__ == "__main__":
     sizeCropImg()

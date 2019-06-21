@@ -57,6 +57,7 @@ class SelectData:
 		# if there are two reference points, then crop the region of interest
 		# from teh image and display it
 		if len(self.refPt) == 2:
+			print(self.refPt)
 			roi = clone[self.refPt[0][1]:self.refPt[1][1], self.refPt[0][0]:self.refPt[1][0]]
 			print("area: " + str(roi.size))
 			print("shape: " + str(roi.shape))
@@ -73,7 +74,7 @@ class SelectData:
 			print("Dir already exists")
 
 		for i in range(len(files)):
-
+			print("processed "+ str(i) +" of "+ str(len(files)))
 			nomSize = int(minSize + (maxSize - minSize) * 2 / 3)
 
 			d = math.sqrt(nomSize)

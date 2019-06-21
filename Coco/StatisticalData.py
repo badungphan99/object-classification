@@ -4,7 +4,7 @@ from collections import Counter
 import matplotlib.pyplot as plt
 
 
-class OverviewData:
+class StatisticalData:
 
     def __init__(self, pathDirImage: str):
         self.__pathDirImage = pathDirImage
@@ -85,3 +85,7 @@ class OverviewData:
             plt.hlines(new_y[i], 0, new_x[i])
         plt.show()
 
+    def getSize(self):
+        for i in range(len(self.__files)):
+            img = cv2.imread(self.__pathDirImage + self.__files[i])
+            print(str(img.shape) + "area: "+ str(img.shape[0]*img.shape[1]))
